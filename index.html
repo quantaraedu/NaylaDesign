@@ -1433,40 +1433,54 @@
             scene.background = new THREE.Color(0xf0f8ff);
             
             // Tambahkan ambient light
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
             scene.add(ambientLight);
             
             // Tambahkan directional light
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(10, 20, 5);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+            directionalLight.position.set(10, 20, 15);
             scene.add(directionalLight);
             
             // Tambahkan point light
-            const pointLight = new THREE.PointLight(0x1a73e8, 0.5);
-            pointLight.position.set(0, 10, 0);
+            const pointLight = new THREE.PointLight(0x1a73e8, 0.7);
+            pointLight.position.set(0, 10, 10);
             scene.add(pointLight);
             
-            // Setup camera
+            // Setup camera - POSISI KAMERA DIPERBAIKI
             const container = document.getElementById('modelContainer');
             const width = container.clientWidth;
             const height = container.clientHeight;
             
-            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-            camera.position.set(5, 5, 5);
+            camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000);
+            // Posisi kamera lebih dekat ke model
+            camera.position.set(3, 2, 5);
             
             // Setup renderer
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true, 
+                alpha: true,
+                powerPreference: "high-performance"
+            });
             renderer.setSize(width, height);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
             
             // Setup OrbitControls
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
+            controls.dampingFactor = 0.1;
             controls.enableZoom = true;
             controls.autoRotate = isRotating;
             controls.autoRotateSpeed = 1.0;
+            controls.minDistance = 1;
+            controls.maxDistance = 20;
+            
+            // Tambahkan grid helper untuk referensi
+            const gridHelper = new THREE.GridHelper(10, 10);
+            gridHelper.position.y = -1;
+            scene.add(gridHelper);
             
             // Load 3D model
             loadModel();
@@ -1491,9 +1505,22 @@
                 function(gltf) {
                     model = gltf.scene;
                     
-                    // Scale dan posisikan model
-                    model.scale.set(1.5, 1.5, 1.5);
+                    // Scale dan posisikan model - SKALA DIPERBAIKI
+                    model.scale.set(0.8, 0.8, 0.8);
                     model.position.set(0, 0, 0);
+                    
+                    // Enable shadows untuk semua child meshes
+                    model.traverse((child) => {
+                        if (child.isMesh) {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            
+                            // Tambahkan material yang lebih baik
+                            if (child.material) {
+                                child.material.needsUpdate = true;
+                            }
+                        }
+                    });
                     
                     // Tambahkan ke scene
                     scene.add(model);
@@ -1501,22 +1528,26 @@
                     // Sembunyikan loading indicator
                     loadingElement.style.display = 'none';
                     
-                    // Fokus camera ke model
+                    // Fokus camera ke model dengan cara yang lebih baik
                     const box = new THREE.Box3().setFromObject(model);
                     const center = box.getCenter(new THREE.Vector3());
                     const size = box.getSize(new THREE.Vector3());
                     
+                    // Hitung jarak kamera yang optimal
                     const maxDim = Math.max(size.x, size.y, size.z);
                     const fov = camera.fov * (Math.PI / 180);
-                    let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
+                    let cameraZ = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
                     
-                    camera.position.copy(center);
-                    camera.position.z += cameraZ * 1.5;
+                    // Atur posisi kamera agar model terlihat jelas
+                    camera.position.set(center.x, center.y + 1, cameraZ * 0.8);
                     
+                    // Atur target controls ke center model
                     controls.target.copy(center);
                     controls.update();
                     
                     console.log('Model robot 3D berhasil dimuat');
+                    console.log('Model size:', size);
+                    console.log('Camera position:', camera.position);
                 },
                 // onProgress callback
                 function(xhr) {
@@ -1553,6 +1584,8 @@
                 specular: 0x444444
             });
             const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.castShadow = true;
+            body.receiveShadow = true;
             
             // Buat kepala robot
             const headGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -1562,6 +1595,8 @@
             });
             const head = new THREE.Mesh(headGeometry, headMaterial);
             head.position.y = 1.5;
+            head.castShadow = true;
+            head.receiveShadow = true;
             
             // Buat lengan robot
             const armGeometry = new THREE.BoxGeometry(0.3, 1.5, 0.3);
@@ -1573,10 +1608,14 @@
             const leftArm = new THREE.Mesh(armGeometry, armMaterial);
             leftArm.position.x = -1;
             leftArm.position.y = 0.5;
+            leftArm.castShadow = true;
+            leftArm.receiveShadow = true;
             
             const rightArm = new THREE.Mesh(armGeometry, armMaterial);
             rightArm.position.x = 1;
             rightArm.position.y = 0.5;
+            rightArm.castShadow = true;
+            rightArm.receiveShadow = true;
             
             // Buat kaki robot
             const legGeometry = new THREE.BoxGeometry(0.4, 1.5, 0.4);
@@ -1588,10 +1627,14 @@
             const leftLeg = new THREE.Mesh(legGeometry, legMaterial);
             leftLeg.position.x = -0.4;
             leftLeg.position.y = -1.75;
+            leftLeg.castShadow = true;
+            leftLeg.receiveShadow = true;
             
             const rightLeg = new THREE.Mesh(legGeometry, legMaterial);
             rightLeg.position.x = 0.4;
             rightLeg.position.y = -1.75;
+            rightLeg.castShadow = true;
+            rightLeg.receiveShadow = true;
             
             // Group semua bagian robot
             model = new THREE.Group();
@@ -1603,6 +1646,14 @@
             model.add(rightLeg);
             
             scene.add(model);
+            
+            // Fokus kamera ke model fallback
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            
+            camera.position.set(0, 1, 4);
+            controls.target.copy(center);
+            controls.update();
             
             loadingElement.style.display = 'none';
             console.log('Model robot fallback dibuat');
@@ -1645,8 +1696,24 @@
         
         document.getElementById('resetBtn').addEventListener('click', function() {
             controls.reset();
-            camera.position.set(5, 5, 5);
-            controls.update();
+            // Reset ke posisi yang optimal
+            if (model) {
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const fov = camera.fov * (Math.PI / 180);
+                let cameraZ = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
+                
+                camera.position.set(center.x, center.y + 1, cameraZ * 0.8);
+                controls.target.copy(center);
+                controls.update();
+            } else {
+                camera.position.set(0, 1, 4);
+                controls.target.set(0, 0, 0);
+                controls.update();
+            }
         });
         
         document.getElementById('zoomInBtn').addEventListener('click', function() {
