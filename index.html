@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nayla Arziki Ramadani Yuva - Portofolio Desainer Teknik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        /* ==================== VARIABEL CSS ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #00bcd4;
+            --whatsapp: #25D366;
+            --dark: #2d3748;
+            --light: #f7fafc;
+            --gray: #718096;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --section-bg: #f8fafc;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ==================== HEADER & NAVIGATION ==================== */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            padding: 10rem 0 5rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        /* Tombol Styling */
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--whatsapp);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--dark);
+            border: 2px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background-color: var(--primary);
+            top: -100px;
+            right: -100px;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background-color: var(--secondary);
+            bottom: 50px;
+            left: -50px;
+        }
+
+        /* ==================== 3D MODEL VIEWER ==================== */
+        .model-viewer-container {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #modelContainer {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .model-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--primary);
+            z-index: 10;
+        }
+
+        .model-loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(26, 115, 232, 0.2);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .model-controls-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .model-control-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .model-control-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .model-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            max-width: 200px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .model-info h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        /* ==================== ABOUT SECTION ==================== */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 4px;
+            background-color: var(--primary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill {
+            background-color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .skill:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        /* ==================== SKILLS SECTION (TERPISAH) ==================== */
+        .skills-section {
+            background-color: var(--section-bg);
+            padding: 5rem 0;
+        }
+
+        .technical-skills {
+            margin-top: 2rem;
+        }
+        
+        .skills-category {
+            margin-bottom: 2.5rem;
+        }
+        
+        .skills-category:last-child {
+            margin-bottom: 0;
+        }
+        
+        .skills-category h4 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(26, 115, 232, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .skills-category h4 i {
+            font-size: 1rem;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        /* Skill item yang diperbaiki */
+        .skill-item {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            gap: 0.8rem;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e3f2fd;
+            color: var(--primary);
+            border-radius: 8px;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .skill-info {
+            flex: 1;
+        }
+        
+        .skill-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+            font-size: 0.95rem;
+        }
+        
+        .skill-level {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .skill-bar {
+            height: 4px;
+            background-color: #e2e8f0;
+            border-radius: 2px;
+            margin-top: 0.3rem;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 2px;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        /* Progress berdasarkan level */
+        .skill-progress.expert { width: 95%; }
+        .skill-progress.advanced { width: 85%; }
+        .skill-progress.intermediate { width: 75%; }
+        .skill-progress.proficient { width: 90%; }
+        
+        /* Skill badges */
+        .skill-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .skill-badge {
+            background-color: #e3f2fd;
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        /* Responsive untuk skills grid */
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .skill-item {
+                padding: 0.7rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .technical-skills {
+                padding: 1.5rem;
+            }
+        }
+
+        /* ==================== PROJECTS SECTION ==================== */
+        .projects {
+            background-color: #f8fafc;
+        }
+
+        .project-filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 2px solid var(--border);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 1;
+            transform: translateY(0);
+            border: 1px solid var(--border);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .project-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background-color: #e3f2fd;
+            color: var(--primary);
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+        }
+
+        /* ==================== CONTACT SECTION ==================== */
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            width: 100%;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item i {
+            background-color: #e3f2fd;
+            color: var(--primary);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* ==================== ELEMEN TAMBAHAN ==================== */
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                margin-bottom: 3rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .model-viewer-container {
+                max-width: 100%;
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0;
+                text-align: center;
+                padding: 1rem 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contact-item i {
+                margin-right: 0;
+                margin-bottom: 0.8rem;
+            }
+            
+            .model-controls-panel {
+                bottom: 10px;
+                padding: 8px 12px;
+            }
+            
+            .model-control-btn {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+        
+        /* Name Highlight */
+        .name-highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        /* Experience Cards */
+        .experience-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .experience-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .experience-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .experience-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Contact Methods */
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            min-width: 200px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .contact-method i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .contact-method h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-method a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .contact-method a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo"><i class="fas fa-cube"></i> NaylaDesign</a>
+                <div class="mobile-menu" id="mobileMenu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#skills">Keahlian</a></li>
+                    <li><a href="#projects">Proyek</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Desainer Teknik <span>Profesional</span></h1>
+                    <p>Saya <span class="name-highlight">Nayla Arziki Ramadani Yuva</span>, mengkhususkan diri dalam desain teknik 3D, CAD, dan pemodelan produk dengan pengalaman lebih dari 8 tahun di industri. Saya menggabungkan kreativitas dengan presisi teknis untuk menghasilkan solusi desain yang inovatif dan fungsional.</p>
+                    
+                    <div class="btn-container">
+                        <a href="#projects" class="btn">
+                            <i class="fas fa-briefcase"></i> Lihat Portofolio
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i> Hubungi Saya
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <!-- 3D Model Viewer -->
+                    <div class="model-viewer-container">
+                        <div id="modelContainer">
+                            <div class="model-loading">
+                                <div class="spinner"></div>
+                                <p>Memuat model 3D...</p>
+                            </div>
+                        </div>
+                        <div class="model-info">
+                            <h4>Model Robot 3D</h4>
+                            <p>Desain robot otomatis karya saya</p>
+                        </div>
+                        <div class="model-controls-panel">
+                            <button class="model-control-btn" id="rotateBtn" title="Putar Otomatis">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button class="model-control-btn" id="resetBtn" title="Reset Posisi">
+                                <i class="fas fa-home"></i>
+                            </button>
+                            <button class="model-control-btn" id="zoomInBtn" title="Zoom In">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button class="model-control-btn" id="zoomOutBtn" title="Zoom Out">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tentang Saya</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Nayla Arziki Ramadani Yuva">
+                </div>
+                <div class="about-text">
+                    <h3><span class="name-highlight">Nayla Arziki Ramadani Yuva</span></h3>
+                    <p>Saya adalah desainer teknik dengan spesialisasi dalam pemodelan 3D, simulasi, dan desain produk. Dengan latar belakang pendidikan teknik dan pengalaman lebih dari 8 tahun, saya telah mengerjakan berbagai proyek mulai dari komponen mesin presisi hingga produk konsumen.</p>
+                    <p>Pendekatan saya dalam desain menggabungkan kreativitas dengan analisis teknis yang mendalam, memastikan setiap solusi tidak hanya estetis tetapi juga fungsional, efisien, dan layak untuk diproduksi.</p>
+                    
+                    <div class="experience-cards">
+                        <div class="experience-card">
+                            <h4>8+ Tahun</h4>
+                            <p>Pengalaman desain teknik</p>
+                        </div>
+                        <div class="experience-card">
+                            <h4>50+ Proyek</h4>
+                            <p>Berhasil diselesaikan</p>
+                        </div>
+                        <div class="experience-card">
+                            <h4>10+ Klien</h4>
+                            <p>Dari berbagai industri</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section (TERPISAH) -->
+    <section class="skills-section" id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2>Keahlian Teknis</h2>
+            </div>
+            
+            <div class="technical-skills">
+                <p style="text-align: center; margin-bottom: 2.5rem; max-width: 800px; margin-left: auto; margin-right: auto; color: var(--gray);">
+                    Berikut adalah keterampilan dan keahlian teknis yang saya kuasai dalam desain teknik, yang telah saya kembangkan selama lebih dari 8 tahun berkarier di bidang ini.
+                </p>
+                
+                <div class="skills-category">
+                    <h4><i class="fas fa-cube"></i> Software CAD & Pemodelan 3D</h4>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-cube"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">SolidWorks</div>
+                                <div class="skill-level">Expert</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress expert"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-drafting-compass"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">AutoCAD</div>
+                                <div class="skill-level">Advanced</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress advanced"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">Fusion 360</div>
+                                <div class="skill-level">Proficient</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress proficient"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">CATIA</div>
+                                <div class="skill-level">Intermediate</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress intermediate"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skills-category">
+                    <h4><i class="fas fa-chart-line"></i> Simulasi & Analisis</h4>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">Ansys (FEA/CFD)</div>
+                                <div class="skill-level">Advanced</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress advanced"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">Simulasi FEA</div>
+                                <div class="skill-level">Proficient</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress proficient"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">CFD Analysis</div>
+                                <div class="skill-level">Intermediate</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress intermediate"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skills-category">
+                    <h4><i class="fas fa-tools"></i> Teknologi & Proses</h4>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-print"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">3D Printing</div>
+                                <div class="skill-level">Expert</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress expert"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">Prototyping</div>
+                                <div class="skill-level">Advanced</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress advanced"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="skill-info">
+                                <div class="skill-name">Reverse Engineering</div>
+                                <div class="skill-level">Proficient</div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress proficient"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skills-category">
+                    <h4><i class="fas fa-cogs"></i> Area Keahlian Lainnya</h4>
+                    <div class="skill-badges">
+                        <span class="skill-badge"><i class="fas fa-box"></i> Desain Produk</span>
+                        <span class="skill-badge"><i class="fas fa-cogs"></i> Desain Mekanik</span>
+                        <span class="skill-badge"><i class="fas fa-image"></i> Rendering 3D</span>
+                        <span class="skill-badge"><i class="fas fa-ruler-combined"></i> Technical Drawing</span>
+                        <span class="skill-badge"><i class="fas fa-clipboard-check"></i> Quality Control</span>
+                        <span class="skill-badge"><i class="fas fa-project-diagram"></i> Product Lifecycle</span>
+                        <span class="skill-badge"><i class="fas fa-lightbulb"></i> Desain Inovatif</span>
+                        <span class="skill-badge"><i class="fas fa-users"></i> Kolaborasi Tim</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section projects" id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>Proyek Terbaru</h2>
+            </div>
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">Semua Proyek</button>
+                <button class="filter-btn" data-filter="cad">Desain CAD</button>
+                <button class="filter-btn" data-filter="simulasi">Simulasi & Analisis</button>
+                <button class="filter-btn" data-filter="produk">Desain Produk</button>
+                <button class="filter-btn" data-filter="robot">Robotika</button>
+            </div>
+            <div class="project-grid">
+                <!-- Project 1 -->
+                <div class="project-card animate" data-category="cad">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Sistem Mekanik Presisi">
+                    </div>
+                    <div class="project-info">
+                        <h3>Sistem Mekanik Presisi</h3>
+                        <p>Desain komponen mesin presisi dengan toleransi ketat menggunakan SolidWorks. Sistem ini meningkatkan efisiensi operasional sebesar 30%.</p>
+                        <div class="project-tags">
+                            <span class="tag">CAD</span>
+                            <span class="tag">SolidWorks</span>
+                            <span class="tag">Mekanik</span>
+                        </div>
+                        <button class="btn btn-small btn-outline" style="margin-top: 1rem;">
+                            <i class="fas fa-eye"></i> Lihat Detail
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card animate" data-category="simulasi">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Analisis CFD untuk Turbin">
+                    </div>
+                    <div class="project-info">
+                        <h3>Analisis CFD untuk Turbin</h3>
+                        <p>Simulasi aliran fluida dan analisis termal untuk optimasi desain turbin menggunakan Ansys Fluent.</p>
+                        <div class="project-tags">
+                            <span class="tag">Simulasi</span>
+                            <span class="tag">CFD</span>
+                            <span class="tag">Ansys</span>
+                        </div>
+                        <button class="btn btn-small btn-outline" style="margin-top: 1rem;">
+                            <i class="fas fa-eye"></i> Lihat Detail
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card animate" data-category="produk">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Desain Perangkat Medis">
+                    </div>
+                    <div class="project-info">
+                        <h3>Desain Perangkat Medis</h3>
+                        <p>Desain ergonomis perangkat medis dengan fokus pada kegunaan dan sterilisasi menggunakan Fusion 360.</p>
+                        <div class="project-tags">
+                            <span class="tag">Desain Produk</span>
+                            <span class="tag">Ergonomi</span>
+                            <span class="tag">Fusion 360</span>
+                        </div>
+                        <button class="btn btn-small btn-outline" style="margin-top: 1rem;">
+                            <i class="fas fa-eye"></i> Lihat Detail
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card animate" data-category="robot">
+                    <div class="project-img">
+                        <img src="https://images.unsplash.com/photo-1589256469067-ea99122bbdc4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Desain Robot Industri">
+                    </div>
+                    <div class="project-info">
+                        <h3>Desain Robot Industri</h3>
+                        <p>Desain robot industri untuk otomasi pabrik dengan 6 sumbu gerak dan sistem kendali canggih.</p>
+                        <div class="project-tags">
+                            <span class="tag">Robotika</span>
+                            <span class="tag">CAD</span>
+                            <span class="tag">Otomasi</span>
+                        </div>
+                        <button class="btn btn-small btn-outline" style="margin-top: 1rem;">
+                            <i class="fas fa-eye"></i> Lihat Detail
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Saya</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Mari Berkolaborasi</h3>
+                    <p>Saya terbuka untuk proyek desain teknik baru, kolaborasi, atau diskusi tentang inovasi dalam desain teknik. Silakan hubungi saya melalui salah satu cara di bawah ini:</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <h4>Email</h4>
+                            <a href="mailto:yuvanayla@gmail.com">yuvanayla@gmail.com</a>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fab fa-whatsapp"></i>
+                            <h4>WhatsApp</h4>
+                            <a href="https://wa.me/6285624250896" target="_blank">+62 856-2425-0896</a>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fas fa-phone"></i>
+                            <h4>Telepon</h4>
+                            <a href="tel:+6285624250896">+62 856-2425-0896</a>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h4>Lokasi</h4>
+                            <span>Jakarta, Indonesia</span>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-container" style="margin-top: 3rem; justify-content: center;">
+                        <a href="https://wa.me/6285624250896?text=Halo%20Nayla,%20saya%20tertarik%20dengan%20portofolio%20desain%20teknik%20Anda" target="_blank" class="btn btn-whatsapp" style="padding: 1rem 2rem;">
+                            <i class="fab fa-whatsapp"></i> Chat via WhatsApp
+                        </a>
+                        <a href="mailto:yuvanayla@gmail.com?subject=Konsultasi%20Desain%20Teknik" class="btn btn-secondary" style="padding: 1rem 2rem;">
+                            <i class="fas fa-envelope"></i> Kirim Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <a href="#" class="logo" style="color: white; margin-bottom: 1rem; display: inline-block;">
+                <i class="fas fa-cube"></i> NaylaDesign
+            </a>
+            <p style="margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Desainer Teknik Profesional dengan spesialisasi dalam pemodelan 3D, CAD, dan desain produk.
+            </p>
+            <div class="social-links">
+                <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://wa.me/6285624250896" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:yuvanayla@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="copyright">&copy; 2023 Nayla Arziki Ramadani Yuva - Portofolio Desainer Teknik. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6285624250896?text=Halo%20Nayla,%20saya%20tertarik%20dengan%20portofolio%20desain%20teknik%20Anda" target="_blank" class="whatsapp-float" title="Chat via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // ==================== THREE.JS 3D MODEL VIEWER ====================
+        let scene, camera, renderer, controls, model;
+        let isRotating = true;
+        let loadingElement;
+
+        // Inisialisasi scene Three.js
+        function init3DViewer() {
+            loadingElement = document.querySelector('.model-loading');
+            
+            // Buat scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f8ff);
+            
+            // Tambahkan ambient light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            // Tambahkan directional light
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 20, 5);
+            scene.add(directionalLight);
+            
+            // Tambahkan point light
+            const pointLight = new THREE.PointLight(0x1a73e8, 0.5);
+            pointLight.position.set(0, 10, 0);
+            scene.add(pointLight);
+            
+            // Setup camera
+            const container = document.getElementById('modelContainer');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(5, 5, 5);
+            
+            // Setup renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+            
+            // Setup OrbitControls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.enableZoom = true;
+            controls.autoRotate = isRotating;
+            controls.autoRotateSpeed = 1.0;
+            
+            // Load 3D model
+            loadModel();
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+            
+            // Mulai animasi
+            animate();
+        }
+        
+        // Load model GLB
+        function loadModel() {
+            const loader = new THREE.GLTFLoader();
+            
+            // PATH TELAH DIUBAH: models/robot.glb
+            const modelUrl = 'models/robot.glb';
+            
+            loader.load(
+                modelUrl,
+                // onLoad callback
+                function(gltf) {
+                    model = gltf.scene;
+                    
+                    // Scale dan posisikan model
+                    model.scale.set(1.5, 1.5, 1.5);
+                    model.position.set(0, 0, 0);
+                    
+                    // Tambahkan ke scene
+                    scene.add(model);
+                    
+                    // Sembunyikan loading indicator
+                    loadingElement.style.display = 'none';
+                    
+                    // Fokus camera ke model
+                    const box = new THREE.Box3().setFromObject(model);
+                    const center = box.getCenter(new THREE.Vector3());
+                    const size = box.getSize(new THREE.Vector3());
+                    
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const fov = camera.fov * (Math.PI / 180);
+                    let cameraZ = Math.abs(maxDim / Math.sin(fov / 2));
+                    
+                    camera.position.copy(center);
+                    camera.position.z += cameraZ * 1.5;
+                    
+                    controls.target.copy(center);
+                    controls.update();
+                    
+                    console.log('Model robot 3D berhasil dimuat');
+                },
+                // onProgress callback
+                function(xhr) {
+                    const percent = (xhr.loaded / xhr.total * 100).toFixed(2);
+                    loadingElement.innerHTML = `
+                        <div class="spinner"></div>
+                        <p>Memuat model robot 3D: ${percent}%</p>
+                    `;
+                },
+                // onError callback
+                function(error) {
+                    console.error('Error loading 3D model:', error);
+                    loadingElement.innerHTML = `
+                        <div style="color: #e74c3c; font-size: 3rem; margin-bottom: 1rem;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <p>Gagal memuat model robot 3D.</p>
+                        <p style="font-size: 0.8rem;">Menggunakan model default...</p>
+                    `;
+                    
+                    // Buat model fallback (robot sederhana) jika gagal load
+                    createFallbackRobotModel();
+                }
+            );
+        }
+        
+        // Buat model fallback jika gagal load
+        function createFallbackRobotModel() {
+            // Buat body robot
+            const bodyGeometry = new THREE.BoxGeometry(1.5, 2, 1);
+            const bodyMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x1a73e8,
+                shininess: 100,
+                specular: 0x444444
+            });
+            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            
+            // Buat kepala robot
+            const headGeometry = new THREE.BoxGeometry(1, 1, 1);
+            const headMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x00bcd4,
+                shininess: 100
+            });
+            const head = new THREE.Mesh(headGeometry, headMaterial);
+            head.position.y = 1.5;
+            
+            // Buat lengan robot
+            const armGeometry = new THREE.BoxGeometry(0.3, 1.5, 0.3);
+            const armMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x4caf50,
+                shininess: 80
+            });
+            
+            const leftArm = new THREE.Mesh(armGeometry, armMaterial);
+            leftArm.position.x = -1;
+            leftArm.position.y = 0.5;
+            
+            const rightArm = new THREE.Mesh(armGeometry, armMaterial);
+            rightArm.position.x = 1;
+            rightArm.position.y = 0.5;
+            
+            // Buat kaki robot
+            const legGeometry = new THREE.BoxGeometry(0.4, 1.5, 0.4);
+            const legMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff9800,
+                shininess: 80
+            });
+            
+            const leftLeg = new THREE.Mesh(legGeometry, legMaterial);
+            leftLeg.position.x = -0.4;
+            leftLeg.position.y = -1.75;
+            
+            const rightLeg = new THREE.Mesh(legGeometry, legMaterial);
+            rightLeg.position.x = 0.4;
+            rightLeg.position.y = -1.75;
+            
+            // Group semua bagian robot
+            model = new THREE.Group();
+            model.add(body);
+            model.add(head);
+            model.add(leftArm);
+            model.add(rightArm);
+            model.add(leftLeg);
+            model.add(rightLeg);
+            
+            scene.add(model);
+            
+            loadingElement.style.display = 'none';
+            console.log('Model robot fallback dibuat');
+        }
+        
+        // Animasi loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (isRotating) {
+                controls.autoRotate = true;
+            } else {
+                controls.autoRotate = false;
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        // Handle window resize
+        function onWindowResize() {
+            const container = document.getElementById('modelContainer');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        // ==================== EVENT LISTENERS UNTUK 3D VIEWER ====================
+        document.getElementById('rotateBtn').addEventListener('click', function() {
+            isRotating = !isRotating;
+            const icon = this.querySelector('i');
+            if (isRotating) {
+                icon.className = 'fas fa-pause';
+                this.title = 'Hentikan Rotasi';
+            } else {
+                icon.className = 'fas fa-sync-alt';
+                this.title = 'Putar Otomatis';
+            }
+        });
+        
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            controls.reset();
+            camera.position.set(5, 5, 5);
+            controls.update();
+        });
+        
+        document.getElementById('zoomInBtn').addEventListener('click', function() {
+            camera.fov = Math.max(10, camera.fov - 5);
+            camera.updateProjectionMatrix();
+        });
+        
+        document.getElementById('zoomOutBtn').addEventListener('click', function() {
+            camera.fov = Math.min(100, camera.fov + 5);
+            camera.updateProjectionMatrix();
+        });
+        
+        // ==================== KODE LAINNYA (ASLI) ====================
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Project filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const filterValue = button.getAttribute('data-filter');
+                
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+        
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    
+                    // Animate skill bars when they come into view
+                    if (entry.target.classList.contains('technical-skills')) {
+                        setTimeout(() => {
+                            const skillBars = document.querySelectorAll('.skill-progress');
+                            skillBars.forEach(bar => {
+                                const width = bar.style.width;
+                                bar.style.width = '0';
+                                setTimeout(() => {
+                                    bar.style.width = width;
+                                }, 100);
+                            });
+                        }, 300);
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        // Observe project cards and other elements
+        document.querySelectorAll('.project-card, .about-text, .contact-info, .experience-card, .technical-skills, .contact-method').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add click event for project detail buttons
+        document.querySelectorAll('.btn-small').forEach(button => {
+            button.addEventListener('click', function() {
+                const projectTitle = this.closest('.project-info').querySelector('h3').textContent;
+                alert(`Detail proyek "${projectTitle}" akan segera tersedia. Untuk informasi lebih lanjut, silakan hubungi saya via WhatsApp atau email.`);
+            });
+        });
+        
+        // Initialize skill bars animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const width = bar.classList.contains('expert') ? '95%' : 
+                             bar.classList.contains('advanced') ? '85%' : 
+                             bar.classList.contains('proficient') ? '90%' : '75%';
+                bar.style.width = width;
+            });
+            
+            // Inisialisasi 3D viewer setelah DOM siap
+            init3DViewer();
+        });
+        
+        // Add email link functionality
+        document.querySelectorAll('a[href^="mailto:"]').forEach(emailLink => {
+            emailLink.addEventListener('click', function(e) {
+                // Optional: Add tracking or confirmation
+                console.log('Email link clicked:', this.href);
+            });
+        });
+    </script>
+</body>
+</html>
