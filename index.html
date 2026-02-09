@@ -297,12 +297,29 @@
             text-align: center;
         }
 
-        .about-image img {
-            max-width: 100%;
+     .about-image img {
+    width: 250px;
+            height: 250px;
             border-radius: 10px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            height: 400px;
             object-fit: cover;
+            object-position: center;
+        }
+        
+        /* Untuk tablet */
+        @media (max-width: 768px) {
+            .about-image img {
+                width: 200px;
+                height: 200px;
+            }
+        }
+        
+        /* Untuk mobile */
+        @media (max-width: 480px) {
+            .about-image img {
+                width: 180px;
+                height: 180px;
+            }
         }
 
         .about-text {
