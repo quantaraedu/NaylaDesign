@@ -297,13 +297,22 @@
             text-align: center;
         }
 
-     .about-image img {
-    width: 250px;
+        .about-image img {
+            width: 250px;
             height: 250px;
-            border-radius: 10px;
+            border-radius: 50%;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             object-fit: cover;
             object-position: center;
+            border: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.05); /* Sedikit membesar saat hover */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--secondary); /* Warna border berubah saat hover */
         }
         
         /* Untuk tablet */
@@ -320,7 +329,7 @@
                 width: 180px;
                 height: 180px;
             }
-        }
+}
 
         .about-text {
             flex: 1;
